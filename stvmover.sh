@@ -15,16 +15,20 @@ if [ -d "/srv/daemon-data/" ]; then
     srvroot="/srv/daemon-data/"
 elif [ -d "/var/lib/pterodactyl/volumes/" ]; then
     srvroot="/var/lib/pterodactyl/volumes/"
+else
+    echo "no ptero dir, exiting"
+    exit 255
 fi
 
 # make temp file
 touch /tmp/stvmover
 
 # fix permissions
+# TODO: WHY??
 chmod 775 -R "$srvroot"
 chown pterodactyl:pterodactyl "$srvroot"
 
-demosRoot="/var/www/html/demos/"
+demosRoot="/var/www/demos/"
 mkdir -p -v "$demosRoot"
 
 # only find demos not modified more than 10 minutes ago (-mmin +10) and feed it into this loop
